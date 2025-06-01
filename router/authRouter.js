@@ -10,10 +10,13 @@ authRouter.post('/signup', async (req, res) => {
         const hashedPas = await bcrypt.hash(data.password, 10)
         const user = new User({
             firstName: data.firstName, lastName: data.lastName,
-            email: data.email, password: hashedPas, age: data.age, skills: data.skills
+            email: data.email, password: hashedPas, age: data.age, skills: data.skills,photoUrl:data.photoUrl,
+            about:data.about
         })
         await user.save();
-        res.send("User added successfully")
+        const token = jwt.sign({ _id: user._id }, "harshitha@123")
+        res.cookie("token", token, {expires: new Date(Date.now() + 8 * 3600000)})
+        res.json({message:"User added successfully",data:user})
     } catch (err) {
         res.status(400).send("Error:" + err.message)
     }
@@ -27,8 +30,10 @@ authRouter.post('/login', async (req, res) => {
             const isValid = await bcrypt.compare(data.password, userFound.password)
             if (isValid) {
                 const token = jwt.sign({ _id: userFound._id }, "harshitha@123")
-                await res.cookie("token", token)
-                res.json({ message: "Logged in successfully" })
+                res.cookie("token", token, {
+                expires: new Date(Date.now() + 8 * 3600000),
+            });
+                res.json({ message: "Logged in successfully",data:userFound })
             } else {
                 throw new Error("Password is not valid")
             }
@@ -38,13 +43,15 @@ authRouter.post('/login', async (req, res) => {
 
     }
     catch (err) {
-        res.status(400).send("Error" + err.message)
+        res.status(400).json({status:400,message:err.message})
     }
 })
 
-authRouter.post('/logout', (req, res) => {
-    res.cookie('token', '')
-    res.json({ message: "Loggedn out successfully" })
+authRouter.post('/logout', async(req, res) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+  });    
+  res.json({ message: "Logged out successfully" })
 })
 
 module.exports = authRouter

@@ -9,7 +9,7 @@ const userAuth = async (req, res, next) => {
             req.user = user
             next();
         } else {
-            throw new Error("Token is not valid")
+            res.status(401).send("User not logged in")
         }
     }
     catch (err) {

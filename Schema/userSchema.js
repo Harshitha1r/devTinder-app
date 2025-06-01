@@ -36,10 +36,15 @@ const userSchema = mongoose.Schema({
     },
     age: {
         type: Number,
-        required: true
     },
     skills: {
         type: [String]
+    },
+    photoUrl: {
+        type:String
+    },
+    about : {
+        type:String
     }
 }, { timeStamps: "true" })
 

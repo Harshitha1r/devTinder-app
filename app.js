@@ -5,8 +5,11 @@ const authRouter=require('./router/authRouter')
 const profileRouter=require('./router/profileRouter')
 const connectionRouter = require('./router/connectionRouter')
 const userRouter = require('./router/userRouter')
+const cors=require('cors')
 
 const app=express();
+
+app.use(cors({origin:'http://localhost:5173',credentials:true}))
 
 app.use(express.json())
 
