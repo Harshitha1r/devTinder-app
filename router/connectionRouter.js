@@ -21,13 +21,17 @@ connectionRouter.post('/request/send/:status/:userId', userAuth, async (req, res
         if (userExist) {
             const request = new connectionSchema({ fromUserId: req.user._id, toUserId: userId, status: status })
             await request.save();
+            if(status=="ignored"){
+              res.json({ message: "Connection igored" })  
+            }else{
             res.json({ message: "Connection request sent succesfully" })
+            }
         } else {
             throw new Error("User does not exist to send a request")
         }
     }
     catch (err) {
-        res.send("Error:" + err.message)
+        res.status(500).json({message:err.message})
     }
 
 })
@@ -36,7 +40,6 @@ connectionRouter.post('/request/review/:status/:userId', userAuth, async (req, r
     try {
         const { status, userId } = req.params;
         const connectionExist = await connectionSchema.findOne({ fromUserId: userId, toUserId: req.user._id })
-        console.log(connectionExist)
         if (!connectionExist) {
             throw new Error("Connection request not exist")
         }
@@ -50,7 +53,7 @@ connectionRouter.post('/request/review/:status/:userId', userAuth, async (req, r
         }
     }
     catch (err) {
-        res.status(400).send("Error:" + err.message)
+        res.status(500).json({message:err.message})
     }
 })
 

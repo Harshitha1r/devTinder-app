@@ -14,7 +14,7 @@ userRouter.get('/user/requests/received', userAuth, async (req, res) => {
         res.json({ message: "Request fetched successfully", data: arr })
     }
     catch (err) {
-        res.status(400).send('Error:' + err.message)
+        res.status(500).json({message:err.message})
     }
 })
 
@@ -26,7 +26,6 @@ userRouter.get('/user/connections', userAuth, async (req, res) => {
             .populate("toUserId", ["_id","firstName", "lastName","photoUrl","about"])
             let arr=[]
             connections.forEach(user=>{
-                console.log(user.fromUserId._id,req.user._id)
                 if(user.fromUserId._id.toString() == req.user._id.toString()){
                     arr.push(user.toUserId)
                 }else{
@@ -37,7 +36,7 @@ userRouter.get('/user/connections', userAuth, async (req, res) => {
         res.json({ message: "Connections fetched successfully", data: arr })
     }
     catch (err) {
-        res.status(400).send('Error:' + err.message)
+        res.status(500).json({message:err.message})
     }
 })
 
@@ -61,7 +60,7 @@ userRouter.get('/user/feed', userAuth, async (req, res) => {
         res.json({ message: "Connections fetched successfully", profiles: userList })
     }
     catch (err) {
-        res.status(400).send('Error:' + err.message)
+        res.status(500).json({message:err.message})
     }
 })
 

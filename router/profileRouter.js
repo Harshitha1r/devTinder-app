@@ -9,7 +9,7 @@ profileRouter.get('/profile/view', userAuth, async (req, res) => {
         res.send({ message: "User info retrieved successfully", data:user })
     }
     catch (err) {
-        res.status(40).send("Err" + err)
+        res.status(500).json({message:err.message})
     }
 })
 
@@ -28,7 +28,7 @@ profileRouter.patch('/profile/edit', userAuth, async (req, res) => {
 
     }
     catch (err) {
-        res.status(400).send("Error:" + err.message)
+        res.status(500).send({message:err.message})
     }
 })
 
@@ -42,7 +42,7 @@ profileRouter.patch('/profile/password', userAuth, async (req, res) => {
         res.json({ message: "Updated successfully", user })
     }
     catch (err) {
-        res.status(400).send("Error:" + err.message)
+        res.status(500).json({message:err.message})
     }
 })
 

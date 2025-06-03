@@ -5,12 +5,12 @@ const userSchema = mongoose.Schema({
     firstName: {
         type: String,
         required: true,
-        min: 5
+        minlength: [5,"firstName should contain atleast 5 Characaters"]
     },
     lastName: {
         type: String,
         required: true,
-        min: 1
+        minlength: [1,"lastName should not be empty"]
     },
     email: {
         type: String,
@@ -32,10 +32,12 @@ const userSchema = mongoose.Schema({
             },
             message: `Please enter a strong password`
         },
-        min: 8
+        minlength: 8,
     },
     age: {
         type: Number,
+        min: [18, 'Age must be at least 18'],
+        max: [65, 'Age must be below 65']
     },
     skills: {
         type: [String]
@@ -48,6 +50,10 @@ const userSchema = mongoose.Schema({
     },
     gender:{
         type:String,
+        enum:{
+            values:["Male","Female"],
+            message: props => `${props.value} is not allowed`
+        }
     }
 }, { timeStamps: "true" })
 
