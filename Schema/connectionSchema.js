@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 const connectionSchema = new mongoose.Schema({
     fromUserId: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     },
     toUserId: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:"users"
     },
     status: {

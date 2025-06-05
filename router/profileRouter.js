@@ -1,6 +1,6 @@
 const express = require('express')
 const profileRouter = express.Router();
-const userAuth = require('../Config/utils')
+const {userAuth} = require('../Config/utils')
 const bcrypt = require('bcrypt')
 
 profileRouter.get('/profile/view', userAuth, async (req, res) => {

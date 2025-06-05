@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const User = require('../Schema/userSchema')
+const crypto=require('crypto')
 const userAuth = async (req, res, next) => {
     try {
         const { token } = req.cookies;
@@ -16,5 +17,11 @@ const userAuth = async (req, res, next) => {
         res.status(500).json({message:err.message})
     }
 }
+const hashValue=(userId,targetUserId)=>{
+    const uniqueId=Array.from(userId+targetUserId).sort().join('');
+    const hash = crypto.createHash('sha256');
+    hash.update(uniqueId);
+    return hash.digest('hex')
+}
 
-module.exports = userAuth
+module.exports = {userAuth,hashValue}

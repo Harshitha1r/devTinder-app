@@ -24,10 +24,8 @@ authRouter.post('/signup', async (req, res) => {
 
 authRouter.post('/login', async (req, res) => {
     const data = req.body;
-    console.log(data)
     try {
         const userFound = await User.findOne({ email: data.email })
-                    console.log(userFound)
         if (userFound) {
             const isValid = await bcrypt.compare(data.password, userFound.password)
             if (isValid) {

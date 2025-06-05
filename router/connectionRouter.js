@@ -1,6 +1,6 @@
 const express = require('express')
 const connectionRouter = express.Router();
-const userAuth = require('../Config/utils');
+const {userAuth} = require('../Config/utils');
 const user = require('../Schema/userSchema')
 const connectionSchema = require('../Schema/connectionSchema')
 
