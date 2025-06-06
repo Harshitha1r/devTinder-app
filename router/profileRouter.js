@@ -2,6 +2,7 @@ const express = require('express')
 const profileRouter = express.Router();
 const {userAuth} = require('../Config/utils')
 const bcrypt = require('bcrypt')
+const User=require('../Schema/userSchema')
 
 profileRouter.get('/profile/view', userAuth, async (req, res) => {
     try {
@@ -32,11 +33,12 @@ profileRouter.patch('/profile/edit', userAuth, async (req, res) => {
     }
 })
 
-profileRouter.patch('/profile/password', userAuth, async (req, res) => {
+profileRouter.patch('/profile/password', async (req, res) => {
     try {
         const password = req.body.password;
+        const email=req.body.email;
         const hashedPas = await bcrypt.hash(password, 10)
-        const user = req.user
+        const user = await User.findOne({email:email})
         user.password = hashedPas
         await user.save();
         res.json({ message: "Updated successfully", user })

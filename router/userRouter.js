@@ -56,7 +56,7 @@ userRouter.get('/user/feed', userAuth, async (req, res) => {
         const userList = await 
         user.find({ $and: [{ _id: { $nin: req.user._id } }, { _id: { $nin: Array.from(hideReq) } }] })
         .select("_id email firstName lastName skills age photoUrl")
-        .skip(skip).limit(limit)
+        .limit(limit)
         res.json({ message: "Connections fetched successfully", profiles: userList })
     }
     catch (err) {

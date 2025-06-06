@@ -14,7 +14,7 @@ const ChatSchema=mongoose.Schema({
     roomId:{
         type:String,
     },
-    particpants:[{type:mongoose.Schema.Types.ObjectId,ref:"Users"}],
+    particpants:[{type:mongoose.Schema.Types.ObjectId,ref:"users"}],
     messages:[messageSchema]
 })
 const chatModel=mongoose.model("Chat",ChatSchema)
