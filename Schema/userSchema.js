@@ -39,9 +39,6 @@ const userSchema = mongoose.Schema({
         min: [18, 'Age must be at least 18'],
         max: [65, 'Age must be below 65']
     },
-    skills: {
-        type: [String]
-    },
     photoUrl: {
         type:String
     },
@@ -54,6 +51,19 @@ const userSchema = mongoose.Schema({
             values:["Male","Female"],
             message: props => `${props.value} is not allowed`
         }
+    },
+    techStack:{
+        type:[String],
+    },
+    experienceLevel:{
+        type:String,
+    },
+    role:{
+        type:String
+    },
+    isOnline:{
+        type:Boolean,
+        default:false
     }
 }, { timeStamps: "true" })
 

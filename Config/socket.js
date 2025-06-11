@@ -36,6 +36,7 @@ const initializeSocket = (server) => {
                 await roomFound.save();
                 }
                 io.to(hashedValue).emit("messagRecieved", { firstName, lastName, message })
+                io.emit("fetchNotification",{targetUserId,firstName})
             }
             catch (err) {
                 console.log(err)

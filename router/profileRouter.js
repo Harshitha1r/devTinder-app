@@ -17,7 +17,7 @@ profileRouter.get('/profile/view', userAuth, async (req, res) => {
 profileRouter.patch('/profile/edit', userAuth, async (req, res) => {
     try {
         const data = req.body
-        const allowedFields = ["firstName", "lastName", "skills","photoUrl","age","about"]
+        const allowedFields = ["firstName", "lastName", "skills","photoUrl","age","about","role","techStack","experienceLevel"]
         if (Object.keys(data).every(key => allowedFields.includes(key))) {
             const user = req.user
             Object.keys(data).forEach(key => user[key] = data[key])

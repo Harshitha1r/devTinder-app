@@ -33,6 +33,7 @@ authRouter.post('/login', async (req, res) => {
                 res.cookie("token", token, {
                 expires: new Date(Date.now() + 8 * 3600000),
             });
+                const userrr=await User.findOneAndUpdate({email:data.email}, { isOnline: true })
                 res.json({ message: "Logged in successfully",data:userFound })
             } else {
                 throw new Error("Password is not valid")
@@ -48,9 +49,11 @@ authRouter.post('/login', async (req, res) => {
 })
 
 authRouter.post('/logout', async(req, res) => {
+  const {email}=req.body
   res.cookie("token", null, {
     expires: new Date(Date.now()),
-  });    
+  });  
+await User.findOneAndUpdate({email:email}, { isOnline: false })
   res.json({ message: "Logged out successfully" })
 })
 

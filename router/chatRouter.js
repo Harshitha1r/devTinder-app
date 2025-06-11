@@ -9,7 +9,7 @@ chatRouter.get('/fetch/messages/:targetUserid',userAuth,async(req,res)=>{
         const {targetUserid}=req.params
         const userId=req.user._id
         const roomFound=await Chat.findOne({particpants:{$all:[userId,targetUserid]}})
-        const targetUser=await userModel.findById(targetUserid).select("firstName lastName photoUrl")
+        const targetUser=await userModel.findById(targetUserid).select("firstName lastName photoUrl isOnline")
         res.json({message:"Messages fetched successfuly",data:roomFound.messages,toDetails:targetUser
         })
     }
